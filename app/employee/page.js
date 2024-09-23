@@ -1,28 +1,86 @@
+"use client";
 import Image from "next/image";
-import Homesection from "./component/home";
+import { useState } from "react";
+import EmployeeProfile from "../component/employeeProfile";
 
-const menuItems = [
-  { icon: "/images/sideNav/menu.png", label: "Menu One" },
-  { icon: "/images/sideNav/menu2.png", label: "Menu Two" },
-  { icon: "/images/sideNav/menu3.png", label: "Menu Three" },
-  { icon: "/images/sideNav/menu4.png", label: "Menu Four" },
-  { icon: "/images/sideNav/menu5.png", label: "Menu Five" },
-  { icon: "/images/sideNav/menu6.png", label: "Menu Six" },
-  { icon: "/images/sideNav/menu7.png", label: "Menu Seven" },
-  { icon: "/images/sideNav/menu8.png", label: "Menu Eight" },
-  { icon: "/images/sideNav/menu9.png", label: "Menu Nine" },
-  { icon: "/images/sideNav/menu10.png", label: "Menu Ten" },
-];
+export default function Employee() {
+  const menuItems = [
+    { icon: "/images/sideNav/menu.png", label: "Menu One" },
+    { icon: "/images/sideNav/menu2.png", label: "Menu Two" },
+    { icon: "/images/sideNav/menu3.png", label: "Menu Three" },
+    { icon: "/images/sideNav/menu4.png", label: "Menu Four" },
+    { icon: "/images/sideNav/menu5.png", label: "Menu Five" },
+    { icon: "/images/sideNav/menu6.png", label: "Menu Six" },
+    { icon: "/images/sideNav/menu7.png", label: "Menu Seven" },
+    { icon: "/images/sideNav/menu8.png", label: "Menu Eight" },
+    { icon: "/images/sideNav/menu9.png", label: "Menu Nine" },
+    { icon: "/images/sideNav/menu10.png", label: "Menu Ten" },
+  ];
 
-
-
-export default function Home() {
+  const projectMembers = [
+    {
+      name: "Victor",
+      role: "UI UX Team Lead",
+      image: "",
+      status: "offline",
+      senior: true,
+    },
+    {
+      name: "Alexa",
+      role: "Sr. UI UX Designer",
+      image: "",
+      status: "online",
+      senior: true,
+    },
+    {
+      name: "Juliet",
+      role: "Blockchain Dev. Team Lead",
+      image: "",
+      status: "online",
+      senior: false,
+    },
+    {
+      name: "Hina",
+      role: "QA Team Lead",
+      image: "",
+      status: "offline",
+      senior: false,
+    },
+    {
+      name: "Steve",
+      role: "UI UX Team Manager",
+      image: "",
+      status: "offline",
+      senior: true,
+    },
+    {
+      name: "Andrielle",
+      role: "Sr. UI UX Designer",
+      image: "",
+      status: "online",
+      senior: true,
+    },
+    {
+      name: "Billie",
+      role: "Blockchain Dev. Team Manager",
+      image: "",
+      status: "online",
+      senior: false,
+    },
+    {
+      name: "Alita",
+      role: "QA Team Manager",
+      image: "",
+      status: "offline",
+      senior: false,
+    },
+  ];
 
   return (
     <div className="bg-[#F8F7FF]">
       <header className="bg-[#F8F7FF] p-4 flex w-full  border-b border-gray-200">
         <div className="w-[40%] xl:w-[15%]">
-          <h1 className=" md:text-2xl text-right font-bold  text-[#181A2B]">
+          <h1 className="md:text-2xl text-right font-bold  text-[#181A2B]">
             UI Frontend
           </h1>
           <div className="text-xs text-right text-gray-500">Test</div>
@@ -61,7 +119,7 @@ export default function Home() {
             className="bg-transparent border-none focus:ring-0 text-sm"
           />
         </div> */}
-          <div className=" items-center space-x-4 hidden md:flex">
+          <div className="items-center space-x-4 hidden md:flex">
             <Image
               className="cursor-pointer scale-[1.5]"
               src="/images/chat.png"
@@ -126,8 +184,7 @@ export default function Home() {
 
         {/* Main Content */}
         <main className="flex-1 flex flex-col overflow-hidden rounded-r-3xl">
-          <Homesection />
-          {/* <EmployeeProfile /> */}
+          <EmployeeProfile />
         </main>
       </div>
     </div>
