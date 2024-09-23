@@ -102,7 +102,7 @@ export default function Homesection() {
       }
 
   return (
-    <div>
+    <>
         {/* Project Members */}
         <div className="flex-1 overflow-y-auto p-6 bg-white  ">
             <div className="mb-6">
@@ -165,7 +165,7 @@ export default function Homesection() {
                   >
                     {member.role}
                   </p>
-                  <Link href="/employee" onClick={() => setSelectedMember(member)} className="border-2 border-[#2695FB] text-[#181A2B]  px-4 py-2 rounded-md hover:bg-blue-100 transition-colors w-full">
+                  <Link href="/employee" onClick={() => setSelectedMember(member)} className="text-center border-2 border-[#2695FB] text-[#181A2B]  px-4 py-2 rounded-md hover:bg-blue-100 transition-colors w-full">
                     Visit Profile
                   </Link>
                 </div>
@@ -223,6 +223,6 @@ export default function Homesection() {
               </div>
             </div>
           </div>
-    </div>
+    </>
   )
 }
