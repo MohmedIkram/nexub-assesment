@@ -1,22 +1,98 @@
+"use client";
 import Image from "next/image";
 import Homesection from "./component/home";
+import { useState } from "react";
 
 const menuItems = [
   { icon: "/images/sideNav/menu.png", label: "Menu One" },
   { icon: "/images/sideNav/menu2.png", label: "Menu Two" },
   { icon: "/images/sideNav/menu3.png", label: "Menu Three" },
   { icon: "/images/sideNav/menu4.png", label: "Menu Four" },
-  { icon: "/images/sideNav/menu5.png", label: "Menu Five" },
-  { icon: "/images/sideNav/menu6.png", label: "Menu Six" },
+  {
+    icon: "/images/sideNav/menu5.png",
+    label: "Menu Five",
+    subMenu: [
+      {
+        label: "Sub menu one",
+        subMenu: [
+          { label: "Sub sub menu one" },
+          { label: "Sub sub menu two" },
+        ],
+      },
+      { label: "Sub menu two" },
+      { label: "Sub menu three" },
+    ],
+  },
+  {
+    icon: "/images/sideNav/menu6.png",
+    label: "Menu Six",
+    subMenu: [
+      {
+        label: "Sub menu A",
+        subMenu: [
+          { label: "Sub menu one" },
+        ],
+      },
+    ],
+  },
   { icon: "/images/sideNav/menu7.png", label: "Menu Seven" },
   { icon: "/images/sideNav/menu8.png", label: "Menu Eight" },
   { icon: "/images/sideNav/menu9.png", label: "Menu Nine" },
   { icon: "/images/sideNav/menu10.png", label: "Menu Ten" },
 ];
 
+function SubMenu({ subMenuItems, depth, openMenuIndex }) {
+  const [openSubMenuIndex, setOpenSubMenuIndex] = useState(null);
 
+  const toggleSubMenu = (index) => {
+    setOpenSubMenuIndex(openSubMenuIndex === index ? null : index);
+  };
+
+  return (
+    <div className={`ml-${depth * 4} mt-2 max-h-[200px] scrollbar scrollbar-track-[#2695FB] scrollbar-thumb-white overflow-y-auto `}>
+      {subMenuItems.map((item, index) => (
+        <div key={index}>
+          <div
+            onClick={() => toggleSubMenu(index)}
+            className="text-gray-600 hover:bg-gray-100 py-2 rounded-md cursor-pointer flex justify-between items-center"
+          >
+            <span>{item.label}</span>
+            {item.subMenu && (
+              <div className="text-blue-500">
+                {openMenuIndex === index ? (
+                  <Image
+                    src="/images/sideNav/subnavarrow.png"
+                    height={24}
+                    width={24}
+                    alt="menu icon"
+                    className="rotate-180 ease-out"
+                  />
+                ) : (
+                  <Image
+                    src="/images/sideNav/subnavarrow.png"
+                    height={24}
+                    width={24}
+                    alt="menu icon"
+                  />
+                )}
+              </div>
+            )}
+          </div>
+          {item.subMenu && openSubMenuIndex === index && (
+            <SubMenu subMenuItems={item.subMenu} depth={depth + 1} />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function Home() {
+  const [openMenuIndex, setOpenMenuIndex] = useState(null);
+
+  const toggleMenu = (index) => {
+    setOpenMenuIndex(openMenuIndex === index ? null : index);
+  };
 
   return (
     <div className="bg-[#F8F7FF]">
@@ -96,29 +172,55 @@ export default function Home() {
       <div className="flex h-screen bg-gray-100 w-[95%] mx-auto rounded-full pb-4">
         {/* Sidebar */}
         <aside className="w-64 bg-white p-4 hidden md:block border-r border-gray-200 rounded-l-3xl">
-          <nav>
+          <nav className="max-h-[100px]">
             {menuItems.map((item, index) => (
-              <div
-                key={index}
-                className={`flex items-center space-x-3 mb-4 pr-3  cursor-pointer ${
-                  index === 5
-                    ? "bg-blue-50 text-blue-600 rounded-full"
-                    : "text-gray-600 hover:bg-gray-100 py-2 rounded-md "
-                }`}
-              >
+              <div key={index}>
                 <div
-                  className={`${
-                    index === 5 ? "bg-[#2695FB] rounded-full p-3" : ""
+                  onClick={() => toggleMenu(index)}
+                  className={`flex items-center justify-between space-x-3 mb-4 pr-3 py-3 cursor-pointer ${
+                    openMenuIndex === index
+                      ? "bg-blue-50 text-blue-600 rounded-full"
+                      : "text-gray-600 hover:bg-gray-100 py-2 rounded-md"
                   }`}
                 >
-                  <Image
-                    src={item.icon}
-                    height={24}
-                    width={24}
-                    alt="search icon"
-                  />
+                  <div className={`${index === 5 ? "bg-[#2695FB] rounded-full p-3" : ""}`}>
+                    <Image
+                      src={item.icon}
+                      height={24}
+                      width={24}
+                      alt="menu icon"
+                    />
+                  </div>
+                  <span>{item.label}</span>
+
+                  {item.subMenu && (
+                    <div className="text-blue-500">
+                      {openMenuIndex === index ? (
+                        <Image
+                          src="/images/sideNav/subnavarrow.png"
+                          height={24}
+                          width={24}
+                          alt="menu icon"
+                          className="rotate-180 ease-out"
+                        />
+                      ) : (
+                        <Image
+                          src="/images/sideNav/subnavarrow.png"
+                          height={24}
+                          width={24}
+                          alt="menu icon"
+                        />
+                      )}
+                    </div>
+                  )}
                 </div>
-                <span>{item.label}</span>
+                {item.subMenu && openMenuIndex === index && (
+                  <SubMenu
+                    subMenuItems={item.subMenu}
+                    depth={1}
+                    openMenuIndex
+                  />
+                )}
               </div>
             ))}
           </nav>
@@ -127,7 +229,6 @@ export default function Home() {
         {/* Main Content */}
         <main className="flex-1 flex flex-col overflow-hidden rounded-r-3xl">
           <Homesection />
-          {/* <EmployeeProfile /> */}
         </main>
       </div>
     </div>
